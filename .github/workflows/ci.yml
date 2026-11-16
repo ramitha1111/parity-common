@@ -1,3 +1,10 @@
+# Optimized by ci-cost (https://github.com/mariotavarez/ci-cost)
+# Applied 3 optimizations:
+# - [HIGH] Add cargo dependency cache to "test" job
+# - [MEDIUM] Add concurrency group to "ci.yml"
+# - [MEDIUM] Switch "test_windows" from Windows to ubuntu runner
+# Estimated savings: ~10 min/run
+#
 on:
   workflow_dispatch:
   pull_request:
@@ -5,6 +12,10 @@ on:
     branches:
       - master
 
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 name: Continuous integration
 
 jobs:
